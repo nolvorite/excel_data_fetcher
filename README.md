@@ -1,0 +1,1 @@
+Laravel that's the easiest to deploy. No virtual host needed, contains jquery and bootstrap 4.0

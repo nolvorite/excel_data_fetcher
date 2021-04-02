@@ -1,0 +1,10 @@
+#main_jumbo_wrap{
+	background: #333 url('images/statistics-cover.jpg') no-repeat scroll center center;
+	background-size:cover;
+}
+
+#main_jumbo_wrap .jumbotron{
+	background:rgba(0,0,0,.75);
+	color:#f0f0f0;
+	text-shadow: 0 3px 2px #000;
+}
