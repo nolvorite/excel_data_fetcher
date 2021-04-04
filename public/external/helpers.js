@@ -2,6 +2,9 @@ function fetchData(method, url, data, dataType = 'json', whatToDo = "",inCaseOfF
 	    switch(method){
 	        case "asObject":
 	            var jsonToGet = [];
+
+	            data._token = window._token;
+
 	            jQuery.ajax(siteDir + url, {
 	                method: method,
 	                headers: {
@@ -25,7 +28,8 @@ function fetchData(method, url, data, dataType = 'json', whatToDo = "",inCaseOfF
 	        break;
 	        default:
 	            jQuery(function($){ //all get requests are JSON here
-
+	            	data._token = window._token;
+	            	
 	            	dataFinal = {
 	                    method: method,
 	                    data: data,
@@ -39,21 +43,26 @@ function fetchData(method, url, data, dataType = 'json', whatToDo = "",inCaseOfF
 	                	if(typeof data[prop] !== "undefined" && data[prop] instanceof FormData){
 			            	for(let [key, value] of Object.entries(data)) {
 							    if(key !== prop){
+
 							    	data[prop].append(key,value);
 							    }
+							    console.log(key,value);
 							}
-							for (let [key,value] of data[prop].entries()) {
+							for (let [key,value] of  Object.entries(data)) {
 							   console.log(key,value); 
 							}
+
+							data[prop].append('_token',window._token);
+
 							dataFinal.contentType = false;
 	    					dataFinal.processData = false;
 	    					dataFinal.data = data[prop];
 						}
-	                }
+	                }   
 
-	            		            
+	                console.log(dataFinal);         	      
 
-					urlFinal = /http(s)?\:\/\//.test(url) ? url : siteDir+url;    
+					urlFinal = /http(s)?\:\/\//.test(url) ? url : siteDir+url; 
 
 	                $.ajax(urlFinal, dataFinal).done(function(returned){
 	                    if(typeof whatToDo === "function"){

@@ -1,10 +1,74 @@
 #main_jumbo_wrap{
-	background: #333 url('images/statistics-cover.jpg') no-repeat scroll center center;
-	background-size:cover;
+    background: #333 url('images/statistics-cover.jpg') no-repeat scroll center center;
+    background-size:cover;
 }
 
 #main_jumbo_wrap .jumbotron{
-	background:rgba(0,0,0,.75);
-	color:#f0f0f0;
-	text-shadow: 0 3px 2px #000;
+    background:rgba(0,0,0,.75);
+    color:#f0f0f0;
+    text-shadow: 0 3px 2px #000;
 } 
+
+hr.my-4 {
+    background: #fff;
+}
+
+#main_jumbo_wrap a{color:#fff;font-weight:bold;}
+
+#steps_row .card-body{min-height:200px;}
+
+label,.card-header{font-weight:bold;}
+
+h1{margin:30px 0 ;}
+
+#steps_row .card {
+    box-shadow: 0 0 0 2px #fff,0 0 6px 6px rgba(0,0,0,.2);
+}
+
+#main_nav{height:60px;}
+
+.colz {
+    padding: 30px 20px;
+    height: 100%;
+}
+
+#spreadsheet_menu h4 {
+    margin-bottom: 20px;
+    /* background:#e8e8e8; */
+}
+
+div#spreadsheet_view {/* background:#e8e8e8; */height: 100%;}
+
+html {}
+
+body[spreadsheet_mode] #wrapper {
+    height: calc(100% - 60px);
+}
+
+html,body[spreadsheet_mode] {
+    min-height: 100%;
+    height: 100%;
+}
+
+#spreadsheet_view .row {
+    height: 100%;
+}
+
+div#spreadsheet_menu {
+    background: #d8d8d8;
+    overflow: auto;
+    box-shadow: inset 0 20px 20px #c0c0c0, inset 0 5px 5px 2px #808080;
+}
+
+li.nav-item {}
+
+div#spreadsheet_block {
+    overflow: hidden;
+    background: #fff;
+}
+
+#spreadsheet_view_iframe{width:100%;height:100%;border:0;margin:0;padding:0;}
+
+.table th.header_row_selector[valign] {
+    vertical-align: middle;
+}
