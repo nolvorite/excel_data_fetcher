@@ -6,7 +6,6 @@
 
     <!-- end library -->
     <link rel="stylesheet" href="{{ link2('vendor/components/font-awesome/css/all.min.css') }}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/7aacbf1f8a.css" type="text/css">
 
 
     <link rel="icon" href="{{ externals('graph.ico') }}" type="image/ico">

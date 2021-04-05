@@ -20,11 +20,17 @@ Route::get('/upload', 'DefaultController@upload');
 
 Route::get('/spreadsheets/', function (Request $request) {
 
-	$getLast = DB::table('uploaded_files')->orderBy('id','DESC')->get();
+	$getLast = DB::table('uploaded_files')->where(['user_id' => \Auth()->id()])->orderBy('id','DESC')->get();
 
-	$id = $getLast[0]->id;
+	if(count($getLast) > 0){
+		$id = $getLast[0]->id;
 
-    return redirect('/spreadsheets/'.$id);
+    	return redirect('/spreadsheets/'.$id);
+	}else{
+		return redirect('/');
+	}
+
+	
 });
 
 Route::get('/spreadsheets/{fileId}', 'DefaultController@spreadSheetPage');
@@ -34,3 +40,7 @@ Route::post('/create/file', 'ActionController@createNew');
 Route::post('/edit_header_row', 'ActionController@editHeaderRow');
 
 Route::get('/file/view/{fileId}', 'DefaultController@excelSheetViewer');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

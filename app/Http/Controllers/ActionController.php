@@ -10,10 +10,15 @@ class ActionController extends Controller
 {
 
 	public function editHeaderRow(Request $request){
+
+		if(!\Auth::user()){
+			exit;
+		}
+
 		$data = $request->all();
 		$result = ['status' => false, 'message' => '', 'data' => []];
 
-		$fileData = DB::table('uploaded_files')->where("id",$data['file_id'])->get()[0];
+		$fileData = DB::table('uploaded_files')->where(["id"=>$data['file_id'],"user_id"=>\Auth::id()])->get()[0];
 
 		$miscData = (array) json_decode($fileData->misc_properties);
 
@@ -28,6 +33,10 @@ class ActionController extends Controller
 	}
 
 	public function createNew(Request $request){
+
+		if(!\Auth::user()){
+			exit;
+		}
 
 		$result = ['status' => false, 'message' => '', 'data' => []];
 
@@ -51,7 +60,7 @@ class ActionController extends Controller
 					$result['status'] = true;
 
 					$insertData = DB::table('uploaded_files')->insertGetId([
-						'user_id' => '-1',
+						'user_id' => \Auth::id(),
 						'file_name' => $newFileName,
 						'path' => storage_path(),
 						'has_headers' => $sent['has_header'],

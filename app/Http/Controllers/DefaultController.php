@@ -17,19 +17,28 @@ class DefaultController extends Controller
 	}
 
 	public function upload(Request $request) {
+
+		if(!\Auth::user()){
+			exit;
+		}
+
 		$data = ['request' => $request, 'mode' => 'upload'];
 	    return view('upload',$data);
 	}
 
 	public function spreadSheetPage(Request $request, $fileId) {	
 
-		$getFile = DB::table('uploaded_files')->where('id', $fileId)->get();
+		if(!\Auth::user()){
+			exit;
+		}
+
+		$getFile = DB::table('uploaded_files')->where(['id' => $fileId, 'user_id' => \Auth()->id()])->get();
 
 		if(count($getFile) === 0){
 			return redirect('/');
 		}
 
-		$spreadSheetList = DB::table('uploaded_files')->where('mime','like','%sheet%')->orWhere("mime",'like','%Sheet%')->get();
+		$spreadSheetList = DB::table('uploaded_files')->where(['user_id' => \Auth()->id()])->where('mime','like','%sheet%')->get();
 
 		$spreadSheetData = [];
 
@@ -40,6 +49,10 @@ class DefaultController extends Controller
 	}
 
 	public function excelSheetViewer(Request $request,$fileId){
+
+		if(!\Auth::user()){
+			exit;
+		}
 
 		$file = DB::table('uploaded_files')->where("id",$fileId)->get();
 

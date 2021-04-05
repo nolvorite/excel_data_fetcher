@@ -6,7 +6,7 @@
 </head>
 
 
-<body{{ ($mode === 'spreadsheets') ? ' spreadsheet_mode' : '' }}>
+<body {{ $mode }}_mode>
 
 @if($mode !== 'iframe')
 @include('partials/header_nav')
