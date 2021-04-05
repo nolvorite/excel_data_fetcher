@@ -42,6 +42,8 @@ class DefaultController extends Controller
 
 		$spreadSheetData = [];
 
+
+
 		$data = ['request' => $request, 'ssId' => $fileId, 'mode' => 'spreadsheets', 'ssList' => $spreadSheetList, 'ssData' => $spreadSheetData];
 
 	    return view('spreadsheets',$data);
@@ -64,6 +66,14 @@ class DefaultController extends Controller
 
 			$Reader = new \SpreadsheetReader($excelFetch);
 
+			//upload data into the database
+
+			//first, check to see if such a data exists
+
+			$checkForData = DB::table('excel_data')->where(['file_id'=>$fileId])->get();
+
+			$dataHasBeenAdded = (count($checkForData) > 0);
+
 			$sheets = $Reader -> Sheets();
 			$sheetsCompilation = [];
 			foreach($sheets as $index => $name){
@@ -72,9 +82,32 @@ class DefaultController extends Controller
 
 				
 				$data = [];
-				foreach($Reader as $row){
+
+				$dataCompiledForInsertion = [];
+
+				foreach($Reader as $rowIndex => $row){
+
 					$data[] = $row;
+
+					foreach($row as $colIndex => $col){
+
+						if(!$dataHasBeenAdded){
+
+							$dataCompiledForInsertion[] = [
+								'file_id' => $fileId,
+								'value' => $col,
+								'col' => $colIndex,
+								'row' => $rowIndex,
+								'sheet_index' => $index
+							];
+
+						}
+
+					}
+
 				}
+
+				DB::table('excel_data')->insert($dataCompiledForInsertion);
 
 				$counter = count($data);
 
